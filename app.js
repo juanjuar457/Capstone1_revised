@@ -24,13 +24,14 @@ $('#searchButton').click(function(){
     });
 
 function petStoreState (data) {
-    console.log(data)
-    state.pets = data.petfinder.pets.pet.map(function (pet){
-        return {
+    state.pets = data.petfinder.pets.pet.map(function (pet) {
+        var petobj = {
             id: pet.id.$t,
-            img_url: pet.media.photos.photo[3].$t,
+            img_url: (!pet.media.photos || !pet.media.photos.photo[3] ? './clipdog.jpeg' : pet.media.photos.photo[3].$t),
             breed: pet.breeds.breed[0] === undefined ? 'Corgi' : pet.breeds.breed[0].$t //problem here not sure why undefinded??
         }
+        console.log(petobj.img_url);
+        return petobj;
     });   
     state.position = 0; 
     return state.pets[state.position].breed;
@@ -92,7 +93,7 @@ function estyQuery (breed) {
 
 function etsyState (data) {
    if(data.results[0] === undefined) {
-        state.etsy.img = '';
+        state.etsy.img = './clipdog.jpeg';
         state.etsy.url = '#';
     } else { 
         state.etsy.img = data.results[0].MainImage.url_170x135;
