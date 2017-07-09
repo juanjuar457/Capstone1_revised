@@ -15,10 +15,10 @@ var state = {
 $('#searchButton').click(function(){
     var url = 'http://api.petfinder.com/pet.find?animal=dog&location=89123&breed=corgi&key=65c4992311f187604a92a73f3816308e&output=full&format=json&callback=?';
     $.getJSON(url,
-       function(data) {    
-       console.log(data)         
+       function(data) {
+       // console.log(data)
         estyQuery(petStoreState(data));
-        console.log(state.pets)
+        // console.log(state.pets)
         }
         );
     });
@@ -30,7 +30,7 @@ function petStoreState (data) {
             img_url: (!pet.media.photos || !pet.media.photos.photo[3] ? './clipdog.jpeg' : pet.media.photos.photo[3].$t),
             breed: pet.breeds.breed[0] === undefined ? 'Corgi' : pet.breeds.breed[0].$t //problem here not sure why undefinded??
         }
-        console.log(petobj.img_url);
+        // console.log(petobj.img_url);
         return petobj;
     });   
     state.position = 0; 
@@ -38,13 +38,15 @@ function petStoreState (data) {
 };
 
 function buttonPress (data, position) {
-    console.log(data);
+    // console.log(data);
 }
 
+//added bluefix and redfix id's to renderstate function to make sure I didn't have pink space below pictures
+//rendered to the boxes on the page JJ 7/8
 function renderState () {
-    $('#red_box').html('<a href ="https://www.petfinder.com/petdetail/' + state.pets[state.position].id +'"> <img height="100px" width="150px" src="' + state.pets[state.position].img_url + '"></a>');  
-    var infoHTML = '<div style="display: inline-block"><a target="_bl9nk" href="' + state.etsy.url + '">'  
-    infoHTML += '<img height="100px" width="150px" src="' + state.etsy.img + '"</img></a></div>';
+    $('#red_box').html('<a id="redfix" href ="https://www.petfinder.com/petdetail/' + state.pets[state.position].id +'"> <img height="130px" width="150px" src="' + state.pets[state.position].img_url + '"></a>');
+    var infoHTML = '<div style="display: inline-block"><a id="bluefix" target="_bl9nk" href="' + state.etsy.url + '">'
+    infoHTML += '<img height="130px" width="150px" src="' + state.etsy.img + '"</img></a></div>';
     $("#blue_box").html(infoHTML);
 };
 
@@ -85,7 +87,7 @@ function estyQuery (breed) {
             // });
 
             
-        },
+        }
         //end success block
     });
 
